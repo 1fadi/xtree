@@ -3,7 +3,7 @@ A Directory Tree Generator
 
 ### Installation
 
-`pip install fadi-tree` to install the package in your python enviroment.
+`pip install fadi-xtree` to install the package in your python enviroment.
 
 ### Usage
 ```
