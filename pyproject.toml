@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "fadi-xtree"
 version = "0.1.0"
 description = "Directory tree generator"
-readme = "README"
+readme = "README.md"
 authors = [{name = "1fadi"}]
 license = {file = "LICENSE"}
 keywords = ["tree", "diagram", "terminal"]
