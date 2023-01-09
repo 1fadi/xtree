@@ -67,6 +67,7 @@ class _TreeGenerator:
         self._sort_by = _TreeGenerator.sort_by.get(sort_by, "Default") 
         self._reverse = reverse
         self._tree = []
+        self._check_gitignore()
 
     def build_tree(self) -> list:
         self._tree_head()
@@ -105,7 +106,8 @@ class _TreeGenerator:
             prefix += PIPE_PREFIX
         else:
             prefix += SPACE_PREFIX
-        if directory.name not in self._ignore_dir:
+        if len(list(filter(lambda x: directory.match(x),
+            self._ignore_dir))) == 0:
             self._tree_body(
                 directory=directory,
                 prefix=prefix
@@ -114,3 +116,12 @@ class _TreeGenerator:
 
     def _add_file(self, file, prefix, connector):
         self._tree.append(f"{prefix}{connector} {file.name}")
+
+    def _check_gitignore(self):
+        gitignore_path = os.path.join(self._root_dir, '.gitignore')
+        if os.path.exists(gitignore_path):
+            with open(gitignore_path) as file:
+                gitignore = list(map(lambda x: x.partition('#')[0].rstrip(),
+                    file.readlines()))  # strip comments
+            gitignore.append(".git")  # ignore .git
+            self._ignore_dir += gitignore
